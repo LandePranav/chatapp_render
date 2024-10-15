@@ -39,10 +39,15 @@ async function getUserDataFromRequest(req){
         const token = req.cookies?.token ;
         if(token){
             jwt.verify(token,jwtSecret,{},(err,userData) => {
-                if(err) throw err ;
-                resolve(userData) ;
+                if(err){
+                    console.error("JWT verification Error: ", err);
+                    reject("Token Verification Failed");
+                }else{
+                    resolve(userData) ;
+                }
             }) ;
         }else {
+            console.warn("No token provided in req")
             reject('no token') ;
         }
     }) ;
@@ -107,10 +112,9 @@ app.post('/api/register', async (req,res) => {
                 username:username,
                 password:hashedPassword
             }) ;
-            
             jwt.sign({userId:createdUser._id, username}, jwtSecret, {}, (err,token) => {
                 if(err) return err ;
-                res.cookie('token',token, {sameSite:'none',secure:true}).status(201).json({
+                res.cookie('token',token, {sameSite:'none',secure:true, httpOnly:true}).status(201).json({
                     id : createdUser._id ,
                     username
                 }) ;
@@ -132,9 +136,9 @@ app.post('/api/login', async (req,res) => {
         if(foundUser){
             const pass = bcrypt.compareSync(password,foundUser.password) ;
             if(pass){
-                jwt.sign({userId:foundUser._id, username}, jwtSecret, {}, (err,token) => {
+                jwt.sign({userId:foundUser._id, username}, jwtSecret, {},(err,token) => {
                     if(err) return err ;
-                    res.cookie('token',token, {sameSite:'none',secure:true}).status(201).json({
+                    res.cookie('token',token, {sameSite:'none',secure:true, httpOnly:true}).status(201).json({
                         id : foundUser._id ,
                     }) ;
                 });
@@ -143,7 +147,7 @@ app.post('/api/login', async (req,res) => {
             }
         }else{
             res.json("Invalid-Cred") ;
-        }  
+        }
     } catch (error) {
         if(error) console.log(error) ;
     }
@@ -151,7 +155,7 @@ app.post('/api/login', async (req,res) => {
 
 app.post('/api/logout', (req,res) => {
     mongoose.connect(process.env.MONGO_URI) ;
-    res.cookie('token', '', {sameSite:'none', secure:true}).status(201).json('logged out succesfully') ;
+    res.cookie('token', '', {sameSite:'none', secure:true, httpOnly:true}).status(201).json('logged out succesfully') ;
 }) ;
 
 //s3 client ,,,out of func so obj created only once ,,not everytime

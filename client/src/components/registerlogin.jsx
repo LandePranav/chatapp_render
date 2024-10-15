@@ -15,7 +15,7 @@ export default function Registerlogin () {
         const url = isLoginorRegister ;
         try {
             const {data} = await axios.post(url, {username,password}).then(console.log("req sent"));
-            //console.log(data) ;
+            console.log(data) ;
             if(url === 'register'){
                 if(data !== 'exists'){
                     setLoggedInUsername(username) ;
@@ -28,7 +28,6 @@ export default function Registerlogin () {
                         setInvalidRes('') ;
                     }, 2500) ;
                 }
-                
             }else if (url === "login"){
                 if(data === "Invalid-Cred"){
                     console.log("wrong id or pass") ;
