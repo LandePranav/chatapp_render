@@ -31,7 +31,7 @@ export default function Chat() {
     }, [selectedUser]) ;
 
     function connectTows(){
-        const ws = new WebSocket('wss://dev.eikaze.online/api') ;
+        const ws = new WebSocket('wss://chatapp-aws-render-final.onrender.com/api') ;
         //const ws = new WebSocket('wss://zenith-chatapp.vercel.app') ;
         setws(ws) ;
         ws.addEventListener('message', handleMessage) ;
