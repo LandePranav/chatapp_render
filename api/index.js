@@ -140,7 +140,6 @@ app.post('/api/register', async (req,res) => {
 app.post('/api/login', async (req,res) => {
     mongoose.connect(process.env.MONGO_URI) ;
     const {username,password} = req.body ;
-    if(req.body){res.json({username, password})};
     try {
         const foundUser = await User.findOne({username}) ;
         if(foundUser){
@@ -148,10 +147,11 @@ app.post('/api/login', async (req,res) => {
             if(pass){
                 jwt.sign({userId:foundUser._id, username}, jwtSecret, {},(err,token) => {
                     if(err) return err ;
+                    console.log("Token: ", token);
                     res.cookie('token',token, {sameSite:'none',secure:true, httpOnly:true}).status(201).json({
                         id : foundUser._id ,
                     }) ;
-                    res.json({token});
+                    console.log("COokie:" , cookie?.token);
                 });
             }else {
                 res.json("Invalid-Cred") ;
