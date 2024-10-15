@@ -9,18 +9,18 @@ export default {
   ],
   theme: {
     extend: {
-      backgroundImage : {
-        'purpleImg' : "url('./purpleback.jpeg')",
-        'dreamy' : "url('./dreamy.jpg')",
-        'greyBonsai' : "url('./greybonsai.jpg')",
-        'rainShed' : "url('./rainShed.jpg')",
-        'crimsonSky' : "url('./crimsonSky.jpeg')",
-        'moon' : "url('./moon.jpg')",
-        'shootingStar' : "url('./shootingStar.jpg')",
-        'mount' : "url('./mount.jpg')",
-        'blackShade' : "url('./blackShade.jpg')",
-        'darkTrees' : "url('./darkTrees.jpg')",
-        'darkMount' : "url('./darkMount.png')",
+      backgroundImage: {
+        'purpleImg': "url('/purpleback.jpeg')",
+        'dreamy': "url('/dreamy.jpg')",
+        'greyBonsai': "url('/greybonsai.jpg')",
+        'rainShed': "url('/rainShed.jpg')",
+        'crimsonSky': "url('/crimsonSky.jpeg')",
+        'moon': "url('/moon.jpg')",
+        'shootingStar': "url('/shootingStar.jpg')",
+        'mount': "url('/mount.jpg')",
+        'blackShade': "url('/blackShade.jpg')",
+        'darkTrees': "url('/darkTrees.jpg')",
+        'darkMount': "url('/darkMount.png')",
       },
       fontFamily: {
         satisfy : ['"Satisfy"', ...defaultTheme.fontFamily.sans]
