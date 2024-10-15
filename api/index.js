@@ -6,6 +6,10 @@ const User = require('./models/user') ;
 const cookieParser = require('cookie-parser') ;
 require('dotenv').config() ;
 const cors = require('cors') ;
+app.use(cors({
+    credentials:true,
+    origin:process.env.CLIENT_URL
+}));
 const bcrypt = require('bcryptjs') ;
 
 //const credentials = {key: privateKey, cert: certificate} ;
@@ -23,11 +27,6 @@ const bSalt = bcrypt.genSaltSync(10) ;
 mongoose.connect(process.env.MONGO_URI).then(
     console.log('DB Connectd Succesfully!') 
 ) ;
-
-app.use(cors({
-    credentials:true,
-    origin:process.env.CLIENT_URL
-}));
 
 app.use(express.json()) ;
 app.use(cookieParser()) ;
