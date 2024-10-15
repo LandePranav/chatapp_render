@@ -6,14 +6,14 @@ const User = require('./models/user') ;
 const cookieParser = require('cookie-parser') ;
 require('dotenv').config() ;
 const cors = require('cors') ;
-app.use(cors({
-    credentials:true,
-    origin:process.env.CLIENT_URL
-}));
 const bcrypt = require('bcryptjs') ;
 
 //const credentials = {key: privateKey, cert: certificate} ;
 const app = express() ;
+app.use(cors({
+    credentials:true,
+    origin:process.env.CLIENT_URL
+}));
 const jwtSecret = process.env.JWTSECRET ;
 const ws = require('ws') ;
 const Message = require('./models/message') ;
