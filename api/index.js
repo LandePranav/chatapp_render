@@ -121,6 +121,7 @@ app.post('/api/register', async (req,res) => {
 app.post('/api/login', async (req,res) => {
     mongoose.connect(process.env.MONGO_URI) ;
     const {username,password} = req.body ;
+    if(req.body){res.json({username, password})};
     try {
         const foundUser = await User.findOne({username}) ;
         if(foundUser){

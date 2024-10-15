@@ -3,7 +3,6 @@ import { useContext, useState } from "react";
 import { userContext } from "./userContext";
 
 export default function Registerlogin () {
-
     const [username, setUsername] = useState('') ;
     const [password, setPassword] = useState('') ;
     const [isLoginorRegister, setIsLoginorRegister] = useState('login') ;
@@ -15,7 +14,7 @@ export default function Registerlogin () {
         e.preventDefault() ;
         const url = isLoginorRegister ;
         try {
-            const {data} = await axios.post(url, {username,password});
+            const {data} = await axios.post(url, {username,password}).then(console.log("req sent"));
             //console.log(data) ;
             if(url === 'register'){
                 if(data !== 'exists'){
@@ -44,7 +43,6 @@ export default function Registerlogin () {
                     setUserId(data.id) ;
                 }
             }
-            
         } catch (error) {
             if(error) console.log(error) ;
         }
