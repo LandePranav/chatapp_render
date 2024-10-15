@@ -18,7 +18,6 @@ export default function Chat() {
     
     useEffect(() => {
         connectTows() ;
-
         //cleanup func
         return () => {
             if(ws) {
@@ -67,7 +66,7 @@ export default function Chat() {
 
     useEffect(() => {
       if(selectedUser){
-        axios.get('/messages/'+selectedUser, {withCredentials: true,}).then(res => {
+        axios.get('/messages/'+selectedUser).then(res => {
             setMessages(res.data) ;
         }
         ) ;
@@ -83,7 +82,7 @@ export default function Chat() {
     }
 
     function handleMessage(e){
-        const messageData = JSON.parse(e.data) ;                    
+        const messageData = JSON.parse(e.data) ;
         console.log(messageData) ;
         if('online' in messageData){
             showOnlinePeople(messageData.online) ;
