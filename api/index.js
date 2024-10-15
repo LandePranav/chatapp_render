@@ -54,6 +54,7 @@ app.get('/api/test', (req,res) => {
     res.json('Backend Server Is Running OK') ;
 }) ;
 
+
 app.get('/api/messages/:userId', async (req,res) => {
     mongoose.connect(process.env.MONGO_URI) ;
     const {userId} = req.params ;
@@ -175,6 +176,13 @@ async function uploadToS3(bufferData, filename, mimetype) {
 const server = app.listen(port) ;
 
 const wss = new ws.WebSocketServer({server}) ;
+
+app.get('/api/serverinfo', async (req,res) => {
+    res.json({
+        server,
+        wss
+    })
+})
 
 // server.on('listening', () => {
 //     console.log(`Express server listening at http://localhost:${port}`);
