@@ -13,7 +13,16 @@ const app = express() ;
 app.use(cookieParser()) ;
 app.use(cors({
     credentials:true,
-    origin:process.env.CLIENT_URL
+    origin:process.env.CLIENT_URL,
+    optionSuccessStatus: 200,
+  Headers: true,
+  exposedHeaders: 'Set-Cookie',
+  methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Access-Control-Allow-Origin',
+    'Content-Type',
+    'Authorization'
+  ]
 }));
 const jwtSecret = process.env.JWTSECRET ;
 const ws = require('ws') ;
