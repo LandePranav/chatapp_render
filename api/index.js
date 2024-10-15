@@ -47,6 +47,7 @@ async function getUserDataFromRequest(req){
     return new Promise((resolve,reject) => {
         const token = req.cookies?.token ;
         if(token){
+            console.log(token);
             jwt.verify(token,jwtSecret,{},(err,userData) => {
                 if(err){
                     console.error("JWT verification Error: ", err);
@@ -150,6 +151,7 @@ app.post('/api/login', async (req,res) => {
                     res.cookie('token',token, {sameSite:'none',secure:true, httpOnly:true}).status(201).json({
                         id : foundUser._id ,
                     }) ;
+                    res.json({token});
                 });
             }else {
                 res.json("Invalid-Cred") ;
