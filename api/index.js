@@ -10,6 +10,7 @@ const bcrypt = require('bcryptjs') ;
 
 //const credentials = {key: privateKey, cert: certificate} ;
 const app = express() ;
+app.use(cookieParser()) ;
 app.use(cors({
     credentials:true,
     origin:process.env.CLIENT_URL
@@ -19,6 +20,7 @@ const ws = require('ws') ;
 const Message = require('./models/message') ;
 //const fs = require('fs') ;
 const {S3Client, PutObjectCommand} = require('@aws-sdk/client-s3') ;
+const { error } = require('console');
 // const multer = require('multer') ;
 // const multerS3 = require('multer-s3') ;
 //const path = require('path') ;
@@ -29,7 +31,6 @@ mongoose.connect(process.env.MONGO_URI).then(
 ) ;
 
 app.use(express.json()) ;
-app.use(cookieParser()) ;
 
 app.use('/uploads', express.static(__dirname + '/uploads')) ;
 
@@ -43,7 +44,7 @@ async function getUserDataFromRequest(req){
             }) ;
         }else {
             reject('no token') ;
-        }  
+        }
     }) ;
 }
 
@@ -54,18 +55,22 @@ app.get('/api/test', (req,res) => {
     res.json('Backend Server Is Running OK') ;
 }) ;
 
-
 app.get('/api/messages/:userId', async (req,res) => {
     mongoose.connect(process.env.MONGO_URI) ;
     const {userId} = req.params ;
-    const userData = await getUserDataFromRequest(req) ;
-    const ourUserId = userData.userId ;
+    try {
+        const userData = await getUserDataFromRequest(req) ;
+        const ourUserId = userData.userId ;
 
-    const messages = await Message.find({
-        sender: {$in:[userId, ourUserId]},
-        recipient: {$in:[userId, ourUserId]},
-    }).sort({createdAt:1}) ;
-    res.json(messages) ;
+        const messages = await Message.find({
+            sender: {$in:[userId, ourUserId]},
+            recipient: {$in:[userId, ourUserId]},
+        }).sort({createdAt:1}) ;
+        res.json(messages);
+    }catch(err){
+        console.log("Error fetching messages: ", error);
+        res.status(401).json({error: error.toString()});
+    }
 }) ;
 
 app.get('/api/people', async (req,res) => {

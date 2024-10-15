@@ -67,12 +67,11 @@ export default function Chat() {
 
     useEffect(() => {
       if(selectedUser){
-        axios.get('/messages/'+selectedUser).then(res => {
+        axios.get('/messages/'+selectedUser, {withCredentials: true,}).then(res => {
             setMessages(res.data) ;
         }
         ) ;
       }
-    
     }, [selectedUser])
 
     function showOnlinePeople(peopleArray){
