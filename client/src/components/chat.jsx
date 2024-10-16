@@ -15,6 +15,7 @@ export default function Chat() {
     const [selectedUser, setSelectedUser] = useState(null) ;
     const {username, userId,setUserId, setUsername} = useContext(userContext) ;
     const divUnderMsg = useRef();
+    const [navVisible, setNavVisible] = useState(true);
     
     useEffect(() => {
         connectTows() ;
@@ -165,18 +166,20 @@ export default function Chat() {
     const messagesWithoutDupes = uniqBy(messages, '_id') ;
 
     return(
-        <div className="flex h-screen w-screen">
-
-            <div className="w-1/3 bg-blackShade bg-center bg-no-repeat bg-cover flex flex-col border-r-4">
+        <div className={"relative top-0 bottom-0 right-0  md:static flex h-screen w-screen overflow-hidden"}>
+            <div className={"w-screen absolute top-0 bottom-0 md:static md:w-1/3 bg-blackShade bg-center bg-no-repeat bg-cover flex flex-col border-r-4 transition-all duration-300  ease-in-out "+ (navVisible ? "left-0" : "-left-full" )}>
+                <Logo />
                 <div className="flex-grow overflow-y-scroll scrollbar-webkit scrollbar-thin px-2">
-                    <Logo />
-                    <div className="pl-4">
+                    <div className="pl-4 uppercase">
                     {Object.keys(onlinePeopleExclOurUser).map(userId => (
                         <Contact 
                             key={userId}
                             userId={userId}
                             username={onlinePeopleExclOurUser[userId]}
-                            onClick={()=> setSelectedUser(userId)}
+                            onClick={()=> {
+                                setSelectedUser(userId);
+                                setNavVisible(false);
+                            }}
                             selected={userId === selectedUser} 
                             online={true} 
                             />
@@ -187,7 +190,10 @@ export default function Chat() {
                             key={userId}
                             userId={userId}
                             username={offlinePeople[userId].username}
-                            onClick={()=> setSelectedUser(userId)}
+                            onClick={()=> {
+                                setSelectedUser(userId);
+                                setNavVisible(false);
+                            }}
                             selected={userId === selectedUser} 
                             online={false} 
                             />
@@ -195,8 +201,7 @@ export default function Chat() {
                     </div>
                 </div>
 
-                    
-                    <div className=" w-4/5 mx-auto text-center justify-between flex items-center border-t-2 px-4 py-1.5 mb-2.5 rounded-2xl border-t-slate-500 bg-slate-100 overflow-hidden "> 
+                    <div className="w-3/5 md:w-4/5 mx-auto text-center justify-between flex items-center px-4 py-2 mb-3 rounded-2xl border-t-slate-500 bg-slate-100 overflow-hidden mt-3 "> 
                         <div className="flex gap-1">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -205,30 +210,33 @@ export default function Chat() {
                                 {username}
                             </span>
                         </div>
-                    
-
-                            <span className="bg-red-300 flex rounded-xl px-2 py-0.5 ml-3">
-                                
-                                <button type="button" onClick={logout} >
-                                    Logout
-                                </button>
-                            </span>
-                                
+                        <span className="bg-red-400 flex rounded-xl px-2 py-0.5 ml-3">
+                            <button type="button" onClick={logout} >
+                                Logout
+                            </button>
+                        </span>
                     </div>
             </div> 
 
-            <div className="w-2/3 flex flex-col bg-darkMount bg-no-repeat bg-cover pb-2.5">
-            
+            <div className={"w-screen absolute top-0 bottom-0 md:static md:w-2/3 flex flex-col bg-darkMount bg-no-repeat bg-cover pb-2.5 transition-all duration-300 ease-in-out "+ (!navVisible ? "left-0" : "left-full" ) } >
+
                 {!selectedUser && (
                     <div className="flex flex-grow items-center justify-center pl-2 font-mono text-white">
                         &larr; Select a user to open chat
                     </div>
-                )}  
+                )} 
 
                 {!!selectedUser && (
                         <div className="relative h-full mx-2">
-
-                            <div className="absolute pl-2 font-mono w-full overflow-y-scroll scrollbar-webkit scrollbar-thin  my-2 top-0 left-0 right-0 bottom-2">
+                        <div className="w-full relative bg-slate-300 font-mono font-extrabold pl-4 z-50 -ml-0 flex gap-6 py-2 items-center rounded-lg uppercase mx-0 md:pl-12 border-2 border-gray-600">
+                            <button onClick={()=>setNavVisible(true)} className="md:hidden" >
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-8">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 9-3 3m0 0 3 3m-3-3h7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                            </button>
+                            {onlinePeople[selectedUser] || offlinePeople[selectedUser]?.username || 'Unknown'}
+                        </div>
+                            <div className="absolute pt-12 pl-2 font-mono w-full overflow-y-scroll scrollbar-webkit scrollbar-thin  my-2 top-0 left-0 right-0 bottom-2">
                                 {messagesWithoutDupes.map(m => (
                                     <div key={m._id} className={" " +(m.sender === userId ? "text-right mr-2" : "text-left")}>
                                         <div className={"text-left inline-block rounded-md  px-3 py-1.5 m-2 -mb-0.5 p "+(m.sender === userId ? " bg-blue-300" : " bg-white")}>
