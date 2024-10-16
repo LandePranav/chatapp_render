@@ -27,7 +27,7 @@ export default function Chat() {
                 ws.removeEventListener('close', () => {})
             }
         }
-    }, [selectedUser]) ;
+    }, []) ; //selectedUser
 
     function connectTows(){
         const ws = new WebSocket('wss://chatapp-aws-render-final.onrender.com/api') ;
