@@ -1,8 +1,8 @@
 export default function Logo() {
     return(
                 <div 
-                    className="text-gray-50 text-3xl text-center mt-2 -pl-2 mb-6 font-satisfy font-bold z-50 sticky fixed">
-                        <div className="w-full flex mx-auto">
+                    className=" text-gray-50 text-3xl text-center mt-2 -pl-2 mb-6 font-satisfy font-bold z-50 sticky top-2 w-full">
+                        <div className="w-full flex mx-auto"> 
                             <div className="mx-auto flex gap-3 border-b-2 px-4 pb-2 border-slate-300 items-center">
                                 <label>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">

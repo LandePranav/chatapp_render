@@ -4,7 +4,8 @@ export default function Contact({userId, onClick, selected, username, online }) 
         <div 
             onClick={()=> onClick(userId)} 
             key={userId} 
-                className={"flex gap-3 mb-2 rounded-md text-lg cursor-pointer items-center padding transition-all ease-in-out hover:bg-slate-200 hover:text-black duration-800 font-mono "+ (selected ? "bg-gray-200 text-black font-normal":  " text-gray-200 hover:opacity-80")}
+            className={
+                "flex gap-3 mb-2 rounded-md text-lg cursor-pointer items-center padding transition-all ease-in-out hover:bg-slate-200 hover:text-black duration-800 font-mono "+ (selected ? "bg-white bg-opacity-50 text-black font-normal":  " text-white hover:bg-opacity-20")}
         >
             <div className=" flex w-full items-center" >
                 {selected && (
