@@ -218,7 +218,7 @@ export default function Chat() {
                     </div>
             </div> 
 
-            <div className={"h-dvh w-screen absolute top-0 bottom-0 md:static md:w-2/3 flex flex-col bg-darkMount bg-no-repeat bg-cover pb-2.5 transition-all duration-300 ease-in-out "+ (!navVisible ? "left-0" : "left-full" ) } >
+            <div className={"h-svh w-screen absolute top-0 bottom-0 md:static md:w-2/3 flex flex-col bg-darkMount bg-no-repeat bg-cover pb-2.5 transition-all duration-300 ease-in-out "+ (!navVisible ? "left-0" : "left-full" ) } >
 
                 {!selectedUser && (
                     <div className="flex flex-grow items-center justify-center pl-2 font-mono text-white">
