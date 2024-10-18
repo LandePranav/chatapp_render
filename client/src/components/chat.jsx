@@ -166,7 +166,7 @@ export default function Chat() {
     const messagesWithoutDupes = uniqBy(messages, '_id') ;
 
     return(
-        <div className={"relative top-0 bottom-0 right-0  md:static flex h-screen w-screen overflow-hidden"}>
+        <div className={"relative top-0 bottom-0 right-0  md:static flex h-dvh w-screen overflow-hidden"}>
             <div className={"w-screen absolute top-0 bottom-0 md:static md:w-1/3 bg-blackShade bg-center bg-no-repeat bg-cover flex flex-col border-r-4 transition-all duration-300  ease-in-out "+ (navVisible ? "left-0" : "-left-full" )}>
                 <Logo />
                 <div className="flex-grow overflow-y-scroll scrollbar-webkit scrollbar-thin px-2">
