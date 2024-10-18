@@ -48,7 +48,7 @@ export default function Registerlogin () {
     }
 
     return(
-            <div className="h-screen flex items-center bg-greyBonsai bg-center bg-no-repeat bg-cover">
+            <div className="h-dvh md:h-screen flex items-center bg-greyBonsai bg-center bg-no-repeat bg-cover">
                 <div className="w-full h-full my-auto flex items-center">
                     <form onSubmit={handleSubmit} className="mx-auto flex flex-col w-64 p-4 my-4 text-center pb-28 md:pb-0 " >
                         <div className="font-bold font-mono text-lg border-b flex gap-2 items-center pb-1.5 text-white ">
